@@ -5,6 +5,8 @@ const { MongoClient } = require('mongodb');
 const crypto = require('crypto');
 require('dotenv').config();
 const { OpenAI } = require('openai');
+const fs = require('fs');
+const path = require('path');
 
 const app = express();
 const port = 3001;
@@ -200,6 +202,41 @@ app.post('/roadmap-generator', async (req, res) => {
       res.status(500).json({ error: 'An error occurred while generating the roadmap', details: error.message });
     }
 });
+
+app.post('/analyze-image', async (req, res) => {
+    const { imageData } = req.body;
+    if (!imageData) {
+      return res.status(400).json({ error: 'No image data provided' });
+    }
+  
+    try {
+      const response = await client.chat.completions.create({
+        model: "gpt-4o",
+        messages: [
+          {
+            role: "user",
+            content: [
+              { type: "text", text: "can you identify the math problem in the image.No explanation.ignore the grids from the image" },
+              {
+                type: "image_url",
+                image_url: {
+                  url: imageData,
+                },
+              },
+            ],
+          },
+        ],
+        max_tokens: 300,
+      });
+  
+      const analysis = response.choices[0].message.content;
+      res.status(200).json({ analysis });
+    } catch (error) {
+      console.error('Error analyzing image:', error);
+      res.status(500).json({ error: 'An error occurred while analyzing the image' });
+    }
+  });
+
 
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
