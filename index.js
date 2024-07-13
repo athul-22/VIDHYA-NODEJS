@@ -11,18 +11,7 @@ const path = require('path');
 const app = express();
 const port = 3001;
 
-const allowedOrigins = ['http://localhost:3000', 'https://vidhya-frontend.vercel.app'];
-
-app.use(cors({
-    origin: function (origin, callback) {
-        if (!origin) return callback(null, true); 
-        if (allowedOrigins.indexOf(origin) === -1) {
-            const msg = 'The CORS policy for this site does not allow access from the specified origin.';
-            return callback(new Error(msg), false);
-        }
-        return callback(null, true);
-    }
-}));
+app.use(cors()); // This will allow all origins
 
 app.use(bodyParser.json());
 
