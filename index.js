@@ -11,7 +11,9 @@ const path = require('path');
 const app = express();
 const port = 3001;
 
-app.use(cors({ origin: 'http://localhost:3000' })); // Enable CORS for specific origin
+app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(cors({ origin: 'https://vidhya-frontend.vercel.app' }));
+
 app.use(bodyParser.json());
 
 const client = new OpenAI({
