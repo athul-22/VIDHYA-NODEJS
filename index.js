@@ -116,13 +116,13 @@ app.post('/chat', async (req, res) => {
             model: "gpt-3.5-turbo",
             messages: [
                 { role: "system", content: `Answer the following in ${language} language:` },
-                { role: "user", content: message }
+                { role: "user", content: new_prompt }
             ],
             max_tokens: 150
         });
 
         const aiResponse = response.choices[0].message.content.trim();
-        res.status(200).json({ response: new_prompt });
+        res.status(200).json({ response: response });
     } catch (error) {
         res.status(500).json({ error: 'An error occurred while generating the chat response' });
     }
