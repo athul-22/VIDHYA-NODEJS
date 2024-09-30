@@ -116,7 +116,7 @@ app.post('/chat', async (req, res) => {
             model: "gpt-3.5-turbo",
             messages: [
                 { role: "system", content: `Answer the following in ${language} language:` },
-                { role: "user", content: new_prompt }
+                { role: "user", content: `${message} Give me 1 single sentence only - simple one`}
             ],
             max_tokens: 150
         });
