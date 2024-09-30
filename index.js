@@ -109,6 +109,7 @@ app.post('/update_user', async (req, res) => {
 
 app.post('/chat', async (req, res) => {
     const { message, language } = req.body;
+    const new_prompt = `${message} Give me 1 single sentence only - simple one`;
 
     try {
         const response = await client.chat.completions.create({
@@ -121,7 +122,7 @@ app.post('/chat', async (req, res) => {
         });
 
         const aiResponse = response.choices[0].message.content.trim();
-        res.status(200).json({ response: aiResponse });
+        res.status(200).json({ response: new_prompt });
     } catch (error) {
         res.status(500).json({ error: 'An error occurred while generating the chat response' });
     }
