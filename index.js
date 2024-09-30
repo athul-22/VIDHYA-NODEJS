@@ -122,7 +122,7 @@ app.post('/chat', async (req, res) => {
         });
 
         const aiResponse = response.choices[0].message.content.trim();
-        res.status(200).json({ response: response });
+        res.status(200).json({ response: aiResponse });
     } catch (error) {
         res.status(500).json({ error: 'An error occurred while generating the chat response' });
     }
