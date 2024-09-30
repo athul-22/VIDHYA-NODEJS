@@ -109,16 +109,16 @@ app.post('/update_user', async (req, res) => {
 
 app.post('/chat', async (req, res) => {
     const { message, language } = req.body;
-    const new_prompt = `${message} Give me 1 single sentence only - simple one`;
+    const new_prompt =  `Answer the following question in one or two sentences max - ${message}`
 
     try {
         const response = await client.chat.completions.create({
             model: "gpt-3.5-turbo",
             messages: [
                 { role: "system", content: `Answer the following in ${language} language:` },
-                { role: "user", content: `${message} Give me 1 single sentence only - simple one`}
+                { role: "user", content: new_prompt}
             ],
-            max_tokens: 150
+            max_tokens: 250
         });
 
         const aiResponse = response.choices[0].message.content.trim();
